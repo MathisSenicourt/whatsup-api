@@ -1,5 +1,6 @@
 const db = require('./db');
 const { generateAccessToken, generateRefreshToken } = require('./token');
+const bcrypt = require('bcrypt');
 
 async function signUp(mail, password, username, name, surname, pp_url) {
     const client = await db.connect();
@@ -9,9 +10,9 @@ async function signUp(mail, password, username, name, surname, pp_url) {
         if (existingUser.rows.length > 0) {
             throw new Error('Email already registered');
         }
-
+        const hashedPassword = await bcrypt.hash(password, 10)
         // If the email is not registered, insert the new user details into the database
-        await client.query('INSERT INTO login (mail, password) VALUES ($1, $2)', [mail, password]);
+        await client.query('INSERT INTO login (mail, password) VALUES ($1, $2)', [mail, hashedPassword]);
         await client.query('INSERT INTO account (mail, username, name, surname, pp_url) VALUES ($1, $2, $3, $4, $5)', [mail, username, name, surname, pp_url]);
 
         // Generate access token and refresh token
