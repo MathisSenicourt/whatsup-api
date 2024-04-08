@@ -2,17 +2,17 @@ const express = require('express');
 const router = express.Router();
 const messageService = require('../services/messages');
 
-// Route pour sauvegarder/envoyer un message
-router.post('/send-message', async function (req, res, next) {
-    const {sender, receiver, content} = req.body;
-    try {
-        const result = await messageService.sendMessage(sender, receiver, content);
-        res.json(result);
-    } catch (error) {
-        console.error('Error sending message:', error);
-        res.status(500).json({error: 'An error occurred while sending the message'});
-    }
-});
+// // Route pour sauvegarder/envoyer un message
+// router.post('/send-message', async function (req, res, next) {
+//     const {sender, receiver, content} = req.body;
+//     try {
+//         const result = await messageService.sendMessage(sender, receiver, content);
+//         res.json(result);
+//     } catch (error) {
+//         console.error('Error sending message:', error);
+//         res.status(500).json({error: 'An error occurred while sending the message'});
+//     }
+// });
 
 // Route pour récupérer la liste des conversations récentes de l'utilisateur
 router.get('/recent-conversations/:userMail', async function (req, res, next) {

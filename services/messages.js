@@ -1,23 +1,23 @@
 const db = require('./db');
 
-async function sendMessage(sender, receiver, content) {
-    try {
-        // Vérifier si l'utilisateur émetteur et le destinataire existent dans la base de données
-        const checkUsersQuery = 'SELECT COUNT(*) FROM login WHERE mail = $1 OR mail = $2';
-        const usersExist = await db.query(checkUsersQuery, [sender, receiver]);
-        if (usersExist.rows[0].count !== '2') {
-            throw new Error('Sender or receiver does not exist');
-        }
-
-        // Enregistrer le message dans la base de données
-        const insertMessageQuery = 'INSERT INTO messages (sender, receiver, content) VALUES ($1, $2, $3)';
-        await db.query(insertMessageQuery, [sender, receiver, content]);
-
-        return {message: 'Message sent successfully'};
-    } catch (error) {
-        throw error;
-    }
-}
+// async function sendMessage(sender, receiver, content) {
+//     try {
+//         // Vérifier si l'utilisateur émetteur et le destinataire existent dans la base de données
+//         const checkUsersQuery = 'SELECT COUNT(*) FROM login WHERE mail = $1 OR mail = $2';
+//         const usersExist = await db.query(checkUsersQuery, [sender, receiver]);
+//         if (usersExist.rows[0].count !== '2') {
+//             throw new Error('Sender or receiver does not exist');
+//         }
+//
+//         // Enregistrer le message dans la base de données
+//         const insertMessageQuery = 'INSERT INTO messages (sender, receiver, content) VALUES ($1, $2, $3)';
+//         await db.query(insertMessageQuery, [sender, receiver, content]);
+//
+//         return {message: 'Message sent successfully'};
+//     } catch (error) {
+//         throw error;
+//     }
+// }
 
 async function getRecentConversations(userMail) {
     try {
@@ -71,7 +71,7 @@ async function getConversation(user1, user2) {
 }
 
 module.exports = {
-    sendMessage,
+    // sendMessage,
     getRecentConversations,
     getConversation
 };

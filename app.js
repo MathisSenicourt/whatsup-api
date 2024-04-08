@@ -4,6 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const { expressjwt: jwt } = require("express-jwt");
+require('dotenv').config();
+
+const privateKey = process.env.PRIVATE_KEY;
 
 var loginRouter = require('./routes/login');
 var signupRouter = require('./routes/signup');
@@ -24,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Middleware for JWT authentication
 app.use(
     jwt({
-      secret: "grosmetcequetuveux",
+      secret: privateKey,
       algorithms: ["HS256"],
     }).unless({ path: ["/login","/signup"] })
 );
