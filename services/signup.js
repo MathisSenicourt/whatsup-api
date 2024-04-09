@@ -5,7 +5,6 @@ const bcrypt = require('bcrypt');
 async function signUp(mail, password, username, name, surname, pp_url) {
     try {
         // Check if the email is already registered
-        console.log("first : "+mail);
         const existingUser = await db.query('SELECT * FROM login WHERE mail = ?', [mail]);
         if (existingUser.length > 0) {
             throw new Error('Email already registered');
