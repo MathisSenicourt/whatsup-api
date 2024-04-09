@@ -4,13 +4,12 @@ const bcrypt = require("bcrypt");
 
 // Fonction pour obtenir les informations de connexion
 async function getLogin(mail, password) {
-    const client = await db.connect();
     try {
         const hashedPassword = await bcrypt.hash(password, 10)
         // Vérifier les informations de connexion dans la base de données
-        const queryResult = await client.query('SELECT * FROM login WHERE mail = $1 AND password = $2', [mail, hashedPassword]);
+        const queryResult = await db.query('SELECT * FROM login WHERE mail = $1 AND password = $2', [mail, hashedPassword]);
 
-        if (queryResult.rows.length === 0) {
+        if (queryResult.length === 0) {
             throw new Error('Invalid email or password');
         }
 

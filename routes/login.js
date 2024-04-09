@@ -3,7 +3,7 @@ const router = express.Router();
 const login = require('../services/login');
 
 
-router.post('/login', async function (req, res, next) {
+router.post('/', async function (req, res, next) {
     const { mail, password } = req.body;
     try {
         const loginResult = await login.getLogin(mail, password);

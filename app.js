@@ -4,9 +4,10 @@ const cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const { expressjwt: jwt } = require("express-jwt");
+
 require('dotenv').config();
 
+const { expressjwt: jwt } = require("express-jwt");
 const privateKey = process.env.PRIVATE_KEY;
 
 var loginRouter = require('./routes/login');
@@ -27,7 +28,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Utilisez CORS comme middleware
 app.use(cors({
-    origin: 'http://localhost:3000',
+    // origin: 'http://localhost:3000',
+    origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     optionsSuccessStatus: 204
@@ -37,8 +39,8 @@ app.use(cors({
 app.use(
     jwt({
       secret: privateKey,
-      algorithms: ["HS256"],
-    }).unless({ path: ["/login","/signup"] })
+      algorithms: ["RS256"],
+    }).unless({ path: ["/login/","/signup/"] })
 );
 
 app.use('/login', loginRouter);
