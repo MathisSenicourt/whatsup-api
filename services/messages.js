@@ -24,13 +24,13 @@ async function getRecentConversations(userMail) {
         // Sélectionner les conversations récentes de l'utilisateur
         const query = `
             SELECT CASE
-                       WHEN m.sender = $1 THEN m.receiver
+                       WHEN m.sender = ? THEN m.receiver
                        ELSE m.sender
                        END AS conversation_partner,
                    m.content,
                    m.date
             FROM messages m
-            WHERE (m.sender = $1 OR m.receiver = $1)
+            WHERE (m.sender = ? OR m.receiver = ?)
               AND (m.date, m.id) = (SELECT MAX(date),
                                            MAX(id)
                                     FROM messages
@@ -38,7 +38,7 @@ async function getRecentConversations(userMail) {
                                        OR (sender = m.receiver AND receiver = m.sender));
             ;
         `;
-        const result = await db.query(query, [userMail]);
+        const result = await db.query(query, [userMail, userMail, userMail]);
 
         const conversations = result.rows.map(row => {
             return {
@@ -59,11 +59,11 @@ async function getConversation(user1, user2) {
         const query = `
             SELECT sender, receiver, content, date
             FROM messages
-            WHERE (sender = $1 AND receiver = $2)
-               OR (sender = $2 AND receiver = $1)
+            WHERE (sender = ? AND receiver = ?)
+               OR (sender = ? AND receiver = ?)
             ORDER BY date;
         `;
-        const result = await db.query(query, [user1, user2]);
+        const result = await db.query(query, [user1, user2, user2, user1]);
         return result.rows;
     } catch (error) {
         throw error;
