@@ -62,8 +62,7 @@ async function getConversation(user1, user2) {
                OR (sender = ? AND receiver = ?)
             ORDER BY date;
         `;
-        const result = await db.query(query, [user1, user2, user2, user1]);
-        return result.rows;
+        return await db.query(query, [user1, user2, user2, user1]);
     } catch (error) {
         throw error;
     }
