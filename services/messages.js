@@ -28,27 +28,26 @@ async function getRecentConversations(userMail) {
                        ELSE m.sender
                        END AS conversation_partner,
                    m.content,
-                   m.date
+                   m.date,
+                   a.name,
+                   a.surname,
+                   a.pp_url
             FROM messages m
+                     JOIN account a ON
+                (m.sender = a.mail AND m.receiver = ?)
+                    OR (m.receiver = a.mail AND m.sender = ?)
             WHERE (m.sender = ? OR m.receiver = ?)
               AND (m.date, m.id) = (SELECT MAX(date),
                                            MAX(id)
                                     FROM messages
                                     WHERE (sender = m.sender AND receiver = m.receiver)
                                        OR (sender = m.receiver AND receiver = m.sender));
-            ;
         `;
-        const result = await db.query(query, [userMail, userMail, userMail]);
-
-        const conversations = result.rows.map(row => {
-            return {
-                partner: row.conversation_partner,
-                message: row.content,
-                date: row.date
-            };
-        });
-
-        return conversations;
+        const result = await db.query(query, [userMail, userMail, userMail, userMail, userMail]);
+        if (!result) {
+            return [];
+        }
+        return result;
     } catch (error) {
         throw error;
     }
