@@ -12,6 +12,7 @@ const privateKey = process.env.PRIVATE_KEY;
 
 var loginRouter = require('./routes/login');
 var signupRouter = require('./routes/signup');
+var tokenRouter = require('./routes/token');
 var messagesRouter = require('./routes/messages');
 
 var app = express();
@@ -40,11 +41,12 @@ app.use(
     jwt({
       secret: privateKey,
       algorithms: ["RS256"],
-    }).unless({ path: ["/login/","/signup/"] })
+    }).unless({ path: ["/login/","/signup/","/token/refresh"] })
 );
 
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
+app.use('/token', tokenRouter);
 app.use('/messages', messagesRouter);
 
 // catch 404 and forward to error handler
