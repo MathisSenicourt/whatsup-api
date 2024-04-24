@@ -5,7 +5,6 @@ const signUpService = require('../services/signup');
 router.post('/', async function (req, res, next) {
     const { mail, password, username, name, surname, pp_url } = req.body;
     try {
-        // Call signUpService method to handle signup logic
         const signUpResult = await signUpService.signUp(mail, password, username, name, surname, pp_url);
         res.json(signUpResult);
     } catch (err) {
