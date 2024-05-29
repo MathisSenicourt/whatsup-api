@@ -36,7 +36,7 @@ CREATE TABLE messages
 
 -- Insérer les comptes dans la table login
 INSERT INTO login (mail, password)
-VALUES ('toto@example.com', '$2b$10$GxqMJNqJO1fe.014TyFiYen8LXNG/glJX6ZoOMuz.TRrx4sJHU7F2'),
+VALUES ('toto@example.com', '$2a$10$stt7COZZD3BcAPK.e0p1l.062TGeWuHeUX7oVPDQWcvqnTaLc47YS'),
        ('mat@example.com', '$2b$10$GxqMJNqJO1fe.014TyFiYen8LXNG/glJX6ZoOMuz.TRrx4sJHU7F2'),
        ('michel@example.com', '$2b$10$GxqMJNqJO1fe.014TyFiYen8LXNG/glJX6ZoOMuz.TRrx4sJHU7F2');
 
