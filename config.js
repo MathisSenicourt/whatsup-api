@@ -3,7 +3,7 @@ const config = {
         host: "localhost",
         user: "root",
         // password: "root",
-        // password: "admin",
+        password: "admin",
         database: "whatsup",
     },
     listPerPage: 10,
