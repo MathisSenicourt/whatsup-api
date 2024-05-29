@@ -23,7 +23,7 @@ jobs:
           run: make push
           env:
             ENV: dev
-            PUBLIC_KEY: ${{ secrets.ACCESS_TOKEN_KEY }}
-            PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN_KEY }}
-            PRIVATE_REFRESH_KEY: ${{ secrets.REFRESH_TOKEN_KEY }}
+            PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
+            PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+            PRIVATE_REFRESH_KEY: ${{ secrets.PRIVATE_REFRESH_KEY }}
             DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
