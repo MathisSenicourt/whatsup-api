@@ -8,6 +8,12 @@ async function getLogin(mail, password) {
         // Vérifier les informations de connexion dans la base de données
         const queryResult = await db.query('SELECT password FROM login WHERE mail = ?', [mail]);
         const bcryptResult = await bcrypt.compare(password, queryResult[0].password);
+        console.log("queryResult = "+ queryResult)
+        console.log("bcryptResult = "+ bcryptResult)
+        console.log("password = "+ password)
+        console.log("queryResult[0] = "+ queryResult[0])
+        console.log("queryResult[0].password = "+ queryResult[0].password)
+
         if (bcryptResult) {
             // Si les informations de connexion sont valides, générer les tokens
             const accessToken = generateAccessToken(mail);
