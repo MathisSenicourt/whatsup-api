@@ -8,7 +8,7 @@ push:
 	ssh -o StrictHostKeyChecking=no -p $(SSH_PORT) $(SSH_USER)@$(SSH_HOST) "cd $(APP_PATH) \
 		&& echo -n PRIVATE_KEY=  >> $(APP_PATH)/.env \
 		&& echo $(PRIVATE_KEY) | base64 -d >> $(APP_PATH)/.env \
-		&& echo PRIVATE_REFRESH_KEY=$(PRIVATE_REFRESH_KEY) >> $(APP_PATH)/.env \
 		&& echo >> $(APP_PATH)/.env \
+		&& echo PRIVATE_REFRESH_KEY=$(PRIVATE_REFRESH_KEY) >> $(APP_PATH)/.env \
 		&& echo DB_PASSWORD=$(DB_PASSWORD) >> $(APP_PATH)/.env \
 		&& npm i && systemctl restart whatsup-api"
