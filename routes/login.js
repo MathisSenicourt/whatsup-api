@@ -6,8 +6,6 @@ const login = require('../services/login');
 router.post('/', async function (req, res, next) {
     const { mail, password } = req.body;
     try {
-        console.log("mail = "+ mail)
-        console.log("password = "+ password)
         const loginResult = await login.getLogin(mail, password);
         console.log("loginResult = "+ loginResult)
         res.json(loginResult);
