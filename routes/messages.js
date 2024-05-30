@@ -63,4 +63,27 @@ router.get('/conversation/:user2', async function (req, res, next) {
     }
 });
 
+router.get('/conversationid/:user2', async function (req, res, next) {
+    try {
+        const accesToken = req.headers['acces-token'];
+        const user2 = req.params.user2;
+        if (!accesToken) {
+            return res.status(401).json({message: 'Acces token missing'});
+        }
+
+        jwt.verify(accesToken, process.env.PRIVATE_KEY, async (err, decoded) => {
+            if (err) {
+                return res.status(403).json({message: 'Invalid acces token'});
+            }
+
+            const userMail = decoded.mail;
+            const roomId = await messageService.getRoomId(userMail, user2);
+            res.json(roomId);
+        });
+    } catch (error) {
+        console.error('Error retrieving conversation:', error);
+        res.status(500).json({error: 'An error occurred while retrieving the conversation'});
+    }
+});
+
 module.exports = router;

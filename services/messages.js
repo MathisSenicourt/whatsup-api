@@ -56,7 +56,7 @@ async function getRecentConversations(userMail) {
 async function getConversation(user1, user2) {
     try {
         const query = `
-            SELECT sender, receiver, content, date
+            SELECT id, sender, receiver, content, date, room_id
             FROM messages
             WHERE (sender = ? AND receiver = ?)
                OR (sender = ? AND receiver = ?)
@@ -68,9 +68,25 @@ async function getConversation(user1, user2) {
     }
 }
 
+async function getRoomId(user1, user2) {
+    try {
+        const query = `
+            SELECT room_id
+            FROM messages
+            WHERE (sender = ? AND receiver = ?)
+               OR (sender = ? AND receiver = ?)
+            LIMIT 1;
+        `;
+        return await db.query(query, [user1, user2, user2, user1]);
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     // sendMessage,
     getRecentConversations,
-    getConversation
+    getConversation,
+    getRoomId
 };
 
