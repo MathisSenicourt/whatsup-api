@@ -1,6 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
 const cors = require('cors');
+const rateLimit = require('express-rate-limit');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -26,6 +27,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Limiter le nombre de requêtes par IP
+app.use(rateLimit({
+    windowMs: 60 * 1000, // 1 minute
+    limit: 100,
+    standardHeaders: 'draft-7', // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+}));
 
 // Utilisez CORS comme middleware
 app.use(cors({
